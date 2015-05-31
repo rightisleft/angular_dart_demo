@@ -14,6 +14,7 @@ class SearchBox extends Object
 }
 
 @Genre("techno")
+
 @Decorator(selector: '[tooltip]')
 class Tooltip {
   final Element element;

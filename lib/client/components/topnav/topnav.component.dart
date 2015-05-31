@@ -9,19 +9,25 @@ part of jit_frontend;
 
 class Topnav extends Object {
   List<NavButtonVO> buttons;
+  Router _router;
 
-  Topnav(RouteProvider routeProvider) {
+  Topnav(Router router, RouteProvider routeProvider) {
+    _router = router;
+
     print('TopNav Initialized');
     buttons = initbuttons();
   }
 
   List<NavButtonVO> initbuttons() {
-
     List<NavButtonVO> buttons = new List<NavButtonVO>();
-    buttons.add( new NavButtonVO()..route = "/landing"..content='Home'..isActive=true );
-    buttons.add( new NavButtonVO()..route = "/flights"..content='Flights' );
-    buttons.add( new NavButtonVO()..route = "/contacts"..content='Contacts' );
+    buttons.add( new NavButtonVO()..route = "landing"..content='Home'..isActive=true );
+    buttons.add( new NavButtonVO()..route = "flights"..content='Flights' );
+    buttons.add( new NavButtonVO()..route = "contact"..content='Contact' );
     return buttons;
+  }
+
+  void doClick() {
+    _router.go('contact', {});
   }
 }
 
