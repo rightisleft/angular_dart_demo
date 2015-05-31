@@ -13,8 +13,6 @@ class JitAppModule extends Module
   JitAppModule() {
     Schemas.schema_classes.forEach((Type type) => bind(type) );
     Client.client_classes.forEach((Type type) => bind(type) );
-
-
     bind(RouteInitializerFn, toValue: Client.flightRoutes);
     bind(NgRoutingUsePushState, toValue: new NgRoutingUsePushState.value(false));
   }

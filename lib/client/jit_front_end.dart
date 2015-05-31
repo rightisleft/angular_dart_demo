@@ -18,5 +18,6 @@ part 'routes/flight_router.dart';
 part 'routes/rref.dart';
 part 'components/search/search_component.dart';
 part 'components/topnav/topnav.component.dart';
+part 'components/flights/picker.component.dart';
 
-const List<Type> client_classes = const [ Rref, Topnav, SearchBox, FlightQueryService, Tooltip];
+const List<Type> client_classes = const [ Picker, Rref, Topnav, SearchBox, FlightQueryService, Tooltip];
