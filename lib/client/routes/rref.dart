@@ -11,7 +11,6 @@ class Rref {
   @NgAttr('target')
   set target(String value) {
     _target = value;
-    print('target is: ' + _target);
   }
 
   Rref(Element this._element, Router this._router) {
@@ -22,4 +21,3 @@ class Rref {
     _router.go(_target, {});
   }
 }
-

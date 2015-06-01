@@ -7,7 +7,31 @@ part of jit_frontend;
     useShadowDom: false
 )
 class Picker extends Object {
-  Picker(RouteProvider routeProvider, FlightQueryService ticketQuery) {
-    ticketQuery.fetchRoutes().then((_) => print('searchbox call is complete'));
+
+  Router _router;
+  NgForm flightForm;
+  Map info = new Map();
+  List<CitiesVO> cities;
+
+  Picker(Router this._router, RouteProvider routeProvider, FlightQueryService ticketQuery) {
+    ticketQuery.fetchCities().then( (List<CitiesVO> vos) {
+        print('--fetched cities--');
+        print(routeProvider.parameters);
+        cities = vos;
+    });
+  }
+
+  onsubmit(NgForm form)
+  {
+    print(form);
+    this._router.go('flightsId', info);
   }
 }
+
+//
+//class FlightFormParams{
+//  String cityDepart;
+//  String cityArrival;
+//  DateTime dateDepart;
+//  DateTime dateArrival;
+//}

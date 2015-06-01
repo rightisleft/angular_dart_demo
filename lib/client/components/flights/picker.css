@@ -1,3 +1,12 @@
-section {
-    background-color: #245269;
+.group {
+    display: block;
+    float: left;
+    height: 100px;
+    clear:none;
+    margin-left: 15px;
+}
+
+label {
+    display:block;
+    clear:both;
 }

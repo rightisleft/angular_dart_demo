@@ -10,6 +10,7 @@ flightRoutes(Router router, RouteViewFactory views) {
   var rLanding    = ngRoute(path: '/landing', view: 'views/landing.html');
   var rLandingId  = ngRoute(path: '/landing/:id', view: 'views/landing.html');
   var rFlights    = ngRoute(path: '/flights', view: 'views/flights.html');
+  var rFlightsId  = ngRoute(path: '/flights/:cityDepart/:cityArrival/:dateDepart/:dateArrival/', view: 'views/flights.html');
   var rContact    = ngRoute(path: '/contact', view: 'views/contact.html');
   var rOrder      = ngRoute(path: '/order', view: 'views/order.html');
   var rDefault    = ngRoute(defaultRoute: true, enter: errorHandler );
@@ -23,6 +24,7 @@ flightRoutes(Router router, RouteViewFactory views) {
                 'contact': rContact,
                 'order': rOrder,
                 'flights': rFlights,
+                'flightsId': rFlightsId,
                 'view_default': rDefault };
 
   views.configure(routes);
