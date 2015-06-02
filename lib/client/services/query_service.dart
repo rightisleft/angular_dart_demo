@@ -2,13 +2,13 @@ part of jit_frontend;
 
 @Injectable()
 class FlightQueryService{
-  final String BASE = 'http://localhost:8888/tickets/';
+  final String BASE = 'http://localhost:1234/tickets/';
   Http _http;
 
   FlightQueryService(Http this._http);
 
   Future fetchRoutes() async {
-    return _http.get(Base + 'routes').then(handleRoutes);
+    return _http.get(BASE + 'routes').then(handleRoutes);
   }
 
   Future fetchCities() async {

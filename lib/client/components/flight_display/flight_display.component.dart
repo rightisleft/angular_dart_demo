@@ -11,9 +11,10 @@ class FlightDisplay extends Object {
   NgForm flight_display_form;
   List<RouteVO> routes;
 
-  Picker(RouteProvider routeProvider, FlightQueryService ticketQuery) {
+  FlightDisplay(RouteProvider routeProvider, FlightQueryService ticketQuery) {
     ticketQuery.fetchRoutes().then( (List<RouteVO> vos) {
       print('--fetched route--');
+      print(vos.toString());
       routes = vos;
     });
   }
