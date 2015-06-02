@@ -3,6 +3,7 @@ library jit_frontend;
 //pub
 import 'package:angular/angular.dart';
 import 'package:dartson/dartson.dart';
+import 'package:intl/intl.dart';
 
 //dart
 import 'dart:convert';

@@ -3,7 +3,6 @@ import 'package:angular/angular.dart';
 import 'package:logging/logging.dart';
 
 import 'package:bootjack/bootjack.dart';
-import 'package:bootjack_datepicker/bootjack_datepicker.dart';
 
 import 'package:angular_dart_demo/client/jit_front_end.dart' as Client;
 import 'package:angular_dart_demo/shared/schemas.dart' as Schemas;
@@ -25,7 +24,6 @@ void main() {
     ..onRecord.listen((LogRecord r) { print(r.message); });
 
   Bootjack.useDefault(); // use all
-  Calendar.use();
 
   applicationFactory()
   .addModule( new JitAppModule() )

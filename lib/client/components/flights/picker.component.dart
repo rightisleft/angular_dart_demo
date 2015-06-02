@@ -10,7 +10,7 @@ class Picker extends Object {
 
   Router _router;
   NgForm flightForm;
-  Map info = new Map();
+  FlightFormParams info = new FlightFormParams();
   List<CitiesVO> cities;
 
   Picker(Router this._router, RouteProvider routeProvider, FlightQueryService ticketQuery) {
@@ -24,14 +24,19 @@ class Picker extends Object {
   onsubmit(NgForm form)
   {
     print(form);
-    this._router.go('flightsId', info);
+    var postItem =  info.toPostable();
+    this._router.go('flightsId', postItem );
   }
 }
 
-//
-//class FlightFormParams{
-//  String cityDepart;
-//  String cityArrival;
-//  DateTime dateDepart;
-//  DateTime dateArrival;
-//}
+var f = new DateFormat('MM-dd-yyyy');
+class FlightFormParams{
+  String cityDepart;
+  String cityArrival;
+  DateTime dateDepart;
+  DateTime dateArrival;
+
+  Map toPostable() {
+   return {'cityDepart': cityDepart, 'cityArrival': cityArrival, 'dateDepart': f.format( dateDepart ) , 'dateArrival': f.format( dateArrival ) };
+  }
+}
