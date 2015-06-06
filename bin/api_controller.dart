@@ -1,13 +1,19 @@
 library flight_controller;
 
 import 'package:shelf/shelf.dart';
-import 'package:shelf_route/shelf_route.dart';
 import 'flight_model.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:dartson/dartson.dart';
 
+class Config {
+  static const String DATABASE_NAME = 'Airport';
+  static const String DATABASE_URL = 'mongodb://127.0.0.1/';
+  static const String DATABASE_SEED = 'db/data/seed.json';
+}
+
 FlightDataModel model = new FlightDataModel();
+
 var converter = new Dartson.JSON();
 
 Future <Response> handleCitites(Request request) async {
@@ -23,8 +29,6 @@ Future <Response> handleTimes(Request request) async {
 }
 
 Future <Response> handleTickets(Request request) async {
-  var id = getPathParameter(request, 'id');
-  print('id is: $id');
   return _genericJsonHandler(model.getAllTimes);
 }
 
