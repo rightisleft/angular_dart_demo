@@ -1,4 +1,4 @@
-part of jit_vos;
+part of jit_schemas;
 
 @Injectable()
 @Entity()

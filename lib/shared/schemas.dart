@@ -1,6 +1,6 @@
 library jit_schemas;
 
-import 'package:angular/angular.dart';
+import 'package:angular/di/module.dart';
 import 'package:dartson/dartson.dart';
 
 part 'vos/base_vo.dart';

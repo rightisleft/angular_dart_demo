@@ -15,8 +15,6 @@ class Picker extends Object {
 
   Picker(Router this._router, RouteProvider routeProvider, FlightQueryService ticketQuery) {
     ticketQuery.fetchCities().then( (List<CitiesVO> vos) {
-        print('--fetched cities--');
-        print(routeProvider.parameters);
         cities = vos;
     });
   }

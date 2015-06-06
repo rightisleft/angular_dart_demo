@@ -12,6 +12,11 @@ dependencies:
   dartson: "0.2.3"
   sass: "0.4.2"
   bootjack: "0.6.5"
+  #start backend
+  mongo_dart: "0.1.46"
+  http_server: "0.9.5+1"
+  connection_pool: "0.1.0+2"
+  shelf_route: "0.12.0"
 transformers:
 - dartson
 - sass

@@ -12,6 +12,8 @@ class FlightDisplay extends Object {
   List<RouteVO> routes;
 
   FlightDisplay(RouteProvider routeProvider, FlightQueryService ticketQuery) {
+    print('routeProvider.parameters');
+    print(routeProvider.parameters);
     ticketQuery.fetchRoutes().then( (List<RouteVO> vos) {
       print('--fetched route--');
       print(vos.toString());
