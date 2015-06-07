@@ -8,21 +8,31 @@ part of jit_frontend;
 )
 class FlightDisplay extends Object {
 
+  RouteProvider routeProvider;
+
   NgForm flight_display_form;
+
+  FlightQueryService queryService;
+  FlightPostParamsVO params;
+
   List<RouteVO> routes;
 
-  FlightDisplay(RouteProvider routeProvider, FlightQueryService ticketQuery) {
-    print('routeProvider.parameters');
-    print(routeProvider.parameters);
-    ticketQuery.fetchRoutes().then( (List<RouteVO> vos) {
-      print('--fetched route--');
-      print(vos.toString());
+  FlightDisplay(RouteProvider this.routeProvider, FlightQueryService this.queryService) {
+    if(routeProvider.parameters.isEmpty == false)
+    {
+      params = new FlightPostParamsVO.FromPost(routeProvider.parameters);
+      fetchData(params);
+    }
+  }
+
+  void fetchData(FlightPostParamsVO params) {
+    queryService.fetchRoutes(params).then( (List<RouteVO> vos) {
       routes = vos;
     });
   }
 
-  onsubmit(NgForm form)
+  void onOrder(RouteVO route)
   {
-    print(form);
+    print(route.route);
   }
 }

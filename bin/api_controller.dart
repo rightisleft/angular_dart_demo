@@ -17,28 +17,47 @@ FlightDataModel model = new FlightDataModel();
 var converter = new Dartson.JSON();
 
 Future <Response> handleCitites(Request request) async {
-  return _genericJsonHandler(model.getAllCities);
+  return _genericJsonHandler(model.getAllCities, request);
 }
 
 Future <Response> handleRoutes(Request request) async {
-  return _genericJsonHandler(model.getAllRoutes);
+  return _genericJsonHandler(model.getAllRoutes, request);
 }
 
 Future <Response> handleTimes(Request request) async {
-  return _genericJsonHandler(model.getAllTimes);
+  return _genericJsonHandler(model.getAllTimes, request);
 }
 
 Future <Response> handleTickets(Request request) async {
-  return _genericJsonHandler(model.getAllTimes);
+  return _genericJsonHandler(model.getAllTimes, request);
 }
 
-Future <Response> _genericJsonHandler(Function getter) async {
-  return getter()
-  .then( ( list ) => _listToJson(list) )
-  .then( (json) =>  new Response.ok( json, headers: {'content-type': 'text/json', 'Access-Control-Allow-Origin': '*'} ) );
+Future <Response> fallback(Request request) async {
+  return _genericJsonHandler((){}, request);
+}
+
+Future <Response> _genericJsonHandler(Function getter, Request request) async {
+  return getParams(request)
+  .then( ( params ) => getter( params ) )
+  .then( ( list ) => _listToJson( list ) )
+  .then( makeResponse );
+}
+
+Future<Response> makeResponse( json ) async {
+  var response = new Response.ok( json, headers: {'content-type': 'text/json',
+                                                  'Access-Control-Allow-Origin': '*',
+                                                  'Access-Control-Allow-Headers': "Origin, X-Requested-With, Content-Type, Accept",
+                                                  'Access-Control-Allow-Methods': "POST, GET, OPTIONS"} );
+  return response;
 }
 
 String _listToJson(List list) {
   dynamic encodable = converter.serialize(list);
   return JSON.encode(encodable);
+}
+
+Future<Map> getParams(Request request) {
+  return request.readAsString().then( (String body) {
+    return body.isNotEmpty ? JSON.decode(body) : {};
+  });
 }

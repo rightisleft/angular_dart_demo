@@ -1,12 +1,11 @@
 section {
-    background-color: whitesmoke;
+
 }
 
-table {
-    margin-bottom: 0;
-}
-.table-striped > tbody > tr:nth-child(odd) > td,
-.table-striped > tbody > tr:nth-child(odd) > th {
-    background-color: #dddddd;
+.table thead {
+    background-color: #ecf0f1;
 }
 
+.order {
+    text-align: center;
+}

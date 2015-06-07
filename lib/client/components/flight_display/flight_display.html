@@ -1,6 +1,12 @@
+<section ng-if="routes == null" class="clearfix" ng-if="routes != null">
+    <div class="clearfix well">
+        <h1>Please select your flight data above</h1>
+    </div>
+</section>
+
 <section ng-if="routes != null" class="clearfix" ng-if="routes != null">
     <form name="flight_display_form" ng-submit="onsubmit()" novalidate id="flight_display_form">
-        <table class="table table-striped table-bordered">
+        <table class="table table-bordered table-hover">
             <thead>
             <tr>
                 <th>Departure</th>
@@ -10,7 +16,7 @@
                 <th>Best Price</th>
                 <th>Standard</th>
                 <th>Desperate</th>
-                <th>Selected</th>
+                <th class="order">Select</th>
             </tr>
             </thead>
             <tbody>
@@ -22,7 +28,7 @@
                 <td>{{ route.price1 }}</td>
                 <td>{{ route.price2 }}</td>
                 <td>{{ route.price3 }}</td>
-                <td> check </td>
+                <td class="order"><span ng-click="onOrder(route)" class="btn btn-sm btn-primary">Order</span> </td>
             </tr>
             </tbody>
         </table>

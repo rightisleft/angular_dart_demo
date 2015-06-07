@@ -20,7 +20,7 @@ class Topnav extends Object {
   List<NavButtonVO> initbuttons() {
     List<NavButtonVO> buttons = new List<NavButtonVO>();
     buttons.add( new NavButtonVO()..route = "landing"..content="Home");
-    buttons.add( new NavButtonVO()..route = "flights"..content="Flights" );
+    buttons.add( new NavButtonVO()..route = "picker"..content="Flights" );
     buttons.add( new NavButtonVO()..route = "contact"..content="Contact" );
     return buttons;
   }

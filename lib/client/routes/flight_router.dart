@@ -9,8 +9,8 @@ flightRoutes(Router router, RouteViewFactory views) {
 
   var rLanding    = ngRoute(path: '/landing', view: 'views/landing.html');
   var rLandingId  = ngRoute(path: '/landing/:id', view: 'views/landing.html');
-  var rFlights    = ngRoute(path: '/flights', view: 'views/flights.html');
-  var rFlightsId  = ngRoute(path: '/flights/:cityDepart/:cityArrival/:dateDepart/:dateArrival/', view: 'views/flights.html');
+  var rFlights    = ngRoute(path: '/picker', view: 'views/picker.html');
+  var rFlightsId  = ngRoute(path: '/picker/:cityDepart/:cityArrival/:dateDepart/:dateArrival/', view: 'views/picker.html');
   var rContact    = ngRoute(path: '/contact', view: 'views/contact.html');
   var rOrder      = ngRoute(path: '/order', view: 'views/order.html');
   var rDefault    = ngRoute(defaultRoute: true, enter: errorHandler );
@@ -23,7 +23,7 @@ flightRoutes(Router router, RouteViewFactory views) {
   Map routes = {'landing': rLanding, 'landing_type': rLandingId,
                 'contact': rContact,
                 'order': rOrder,
-                'flights': rFlights,
+                'picker': rFlights,
                 'flightsId': rFlightsId,
                 'view_default': rDefault };
 

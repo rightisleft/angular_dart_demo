@@ -5,15 +5,15 @@ import 'package:angular_dart_demo/shared/schemas.dart';
 
 class FlightDataModel extends Object with BaseMongoModel {
 
-  Future <List> getAllCities() {
+  Future <List> getAllCities(Map params) {
     return readCollectionByType(CitiesVO);
   }
 
-  Future <List> getAllRoutes() {
+  Future <List> getAllRoutes(Map params) {
     return readCollectionByType(RouteVO);
   }
 
-  Future <List> getAllTimes() {
+  Future <List> getAllTimes(Map params) {
     return readCollectionByType(TimeVO);
   }
 }

@@ -9,7 +9,7 @@ part of jit_frontend;
 class SearchBox extends Object
 {
   SearchBox(RouteProvider routeProvider, FlightQueryService ticketQuery){
-    ticketQuery.fetchRoutes().then( (_) => print('searchbox call is complete') );
+//    ticketQuery.fetchRoutes().then( (_) => print('searchbox call is complete') );
   }
 }
 
