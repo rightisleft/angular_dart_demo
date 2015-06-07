@@ -15,7 +15,6 @@ class Config {
 class BaseMongoModel {
 
   final MongoDbPool _dbPool = new MongoDbPool(Config.DATABASE_URL + Config.DATABASE_NAME, 10);
-  static final Db database = new Db(Config.DATABASE_URL + Config.DATABASE_NAME);
 
   Future<Map> createByItem(BaseVO item) async {
     assert(item.id == null);
@@ -42,6 +41,16 @@ class BaseMongoModel {
     });
   }
 
+  Future<BaseVO> readItemByItem(BaseVO matcher) async {
+    assert(matcher.id != null);
+    Map query = {'_id': matcher.id};
+    BaseVO bvo;
+    return _getCollection(matcher.collection_key, query).then((items) {
+      bvo = mapToVO( getInstance(matcher.runtimeType), items.first);
+      return bvo;
+    });
+  }
+
   Future<List> readCollectionByType(t, [Map query = null]) async {
     BaseVO vo = getInstance(t);
     List list = new List();
@@ -55,11 +64,13 @@ class BaseMongoModel {
 
   Future<Map> updateItem(BaseVO item) async {
     assert(item.id != null);
-    return database.open().then((bool isOpen) async {
-      DbCollection collection = new DbCollection(database, item.collection_key);
-      Map selector = {'_id': item.id};
-      Map newItem = voToMongoMap(item);
-      return await collection.update(selector, newItem);
+    _dbPool.openNewConnection().then((Db database) {
+      return database.open().then((bool isOpen) async {
+        DbCollection collection = new DbCollection(database, item.collection_key);
+        Map selector = {'_id': item.id};
+        Map newItem = voToMongoMap(item);
+        return await collection.update(selector, newItem);
+      });
     });
   }
 
