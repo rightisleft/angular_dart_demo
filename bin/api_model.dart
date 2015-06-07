@@ -14,7 +14,7 @@ class Config {
 
 class BaseMongoModel {
 
-  final MongoDbPool _dbPool = new MongoDbPool(Config.DATABASE_URL + Config.DATABASE_NAME, 10);
+  static final MongoDbPool _dbPool = new MongoDbPool(Config.DATABASE_URL + Config.DATABASE_NAME, 10);
 
   Future<Map> createByItem(BaseVO item) async {
     assert(item.id == null);
@@ -46,7 +46,7 @@ class BaseMongoModel {
     Map query = {'_id': matcher.id};
     BaseVO bvo;
     return _getCollection(matcher.collection_key, query).then((items) {
-      bvo = mapToVO( getInstance(matcher.runtimeType), items.first);
+      bvo = mapToVO(getInstance(matcher.runtimeType), items.first);
       return bvo;
     });
   }
@@ -64,12 +64,13 @@ class BaseMongoModel {
 
   Future<Map> updateItem(BaseVO item) async {
     assert(item.id != null);
-    return _dbPool.openNewConnection().then((Db database) {
-      return database.open().then((bool isOpen) async {
-        DbCollection collection = new DbCollection(database, item.collection_key);
-        Map selector = {'_id': item.id};
-        Map newItem = voToMongoMap(item);
-        return await collection.update(selector, newItem);
+    return _dbPool.openNewConnection().then((Db database) async {
+      DbCollection collection = new DbCollection(database, item.collection_key);
+      Map selector = {'_id': item.id};
+      Map newItem = voToMongoMap(item);
+      return await collection.update(selector, newItem).then((_) {
+        _dbPool.closeConnection(database);
+        return _;
       });
     });
   }
@@ -77,13 +78,11 @@ class BaseMongoModel {
   // Some Abstractions
 
   Future<List> _getCollection(String collectionName, [Map query = null]) {
-    return _dbPool.openNewConnection().then((Db conn) {
-      return conn.open().then((bool isOpen) async {
-        DbCollection collection = new DbCollection(conn, collectionName);
-        return await collection.find(query).toList().then((map) {
-          _dbPool.closeConnection(conn);
-          return map;
-        });
+    return _dbPool.openNewConnection().then((Db conn) async {
+      DbCollection collection = new DbCollection(conn, collectionName);
+      return await collection.find(query).toList().then((map) {
+        _dbPool.closeConnection(conn);
+        return map;
       });
     });
   }
@@ -121,7 +120,8 @@ class BaseMongoModel {
           }
         };
       });
-      type = type.superclass; // get properties from superclass too!
+      type = type.superclass;
+      // get properties from superclass too!
     }
 
     return target;
