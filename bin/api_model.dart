@@ -52,11 +52,11 @@ class BaseMongoModel {
   }
 
   Future<List> readCollectionByType(t, [Map query = null]) async {
-    BaseVO vo = getInstance(t);
+    BaseVO freshInstance = getInstance(t);
     List list = new List();
-    return _getCollection(vo.collection_key, query).then((items) {
+    return _getCollection(freshInstance.collection_key, query).then((items) {
       items.forEach((item) {
-        list.add(mapToVO(getInstance(t), item));
+        list.add(mapToVO(freshInstance, item));
       });
       return list;
     });
@@ -64,7 +64,7 @@ class BaseMongoModel {
 
   Future<Map> updateItem(BaseVO item) async {
     assert(item.id != null);
-    _dbPool.openNewConnection().then((Db database) {
+    return _dbPool.openNewConnection().then((Db database) {
       return database.open().then((bool isOpen) async {
         DbCollection collection = new DbCollection(database, item.collection_key);
         Map selector = {'_id': item.id};
@@ -74,17 +74,9 @@ class BaseMongoModel {
     });
   }
 
-  //Abstractions
+  // Some Abstractions
 
-  //
-  //
-  //
-  //
-  //
-  //
-
-
-  Future<Cursor> _getCollection(String collectionName, [Map query = null]) {
+  Future<List> _getCollection(String collectionName, [Map query = null]) {
     return _dbPool.openNewConnection().then((Db conn) {
       return conn.open().then((bool isOpen) async {
         DbCollection collection = new DbCollection(conn, collectionName);
@@ -105,14 +97,14 @@ class BaseMongoModel {
     return im.reflectee;
   }
 
-  dynamic mapToVO(object, Map json) {
-    var reflection = reflect(object);
-    json['id'] = json['_id'];
-    json.remove('_id');
-    json.forEach((k, v) {
+  dynamic mapToVO(cleanObject, Map document) {
+    var reflection = reflect(cleanObject);
+    document['id'] = document['_id'];
+    document.remove('_id');
+    document.forEach((k, v) {
       reflection.setField(new Symbol(k), v);
     });
-    return object;
+    return cleanObject;
   }
 
   Map voToMap(Object object) {
@@ -138,8 +130,9 @@ class BaseMongoModel {
   Map voToMongoMap(object) {
     Map item = voToMap(object);
 
-    // mongo uses a underscore prefix which would act as a private field in dart
+    // mongo uses an underscore prefix which would act as a private field in dart
     // convert only on write to mongo
+
     item['_id'] = item['id'];
     item.remove('id');
     return item;

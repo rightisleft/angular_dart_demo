@@ -8,7 +8,6 @@ main() {
 
   it("should create a record VO and write to the db", () {
     return  model.createByItem(routeVO).then(( Map status ) {
-      print(routeVO.id);
       expect(status['ok']).toEqual(1.0);
     });
   });
@@ -17,7 +16,6 @@ main() {
     routeVO.price1=10000;
     return  model.updateItem(routeVO).then((Map newMap){
       return  model.readItemByItem(routeVO).then((RouteVO vo){
-        print(vo);
         expect(vo.price1).toEqual(routeVO.price1);
       });
     });
@@ -25,7 +23,6 @@ main() {
 
   it("will retrieive the item created in the first step", () {
     return  model.readItemByItem(routeVO).then((BaseVO vo){
-      print(vo);
       expect(vo.id).toEqual(routeVO.id);
     });
   });
