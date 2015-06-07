@@ -7,3 +7,13 @@ html, body {
     padding: 0;
     font-family: 'Roboto', sans-serif;
 }
+
+.container {
+    width: 1170px;
+}
+
+.container > div:first-child {
+    background-color: cornflowerblue;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
