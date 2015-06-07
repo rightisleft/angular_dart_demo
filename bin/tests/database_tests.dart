@@ -14,8 +14,9 @@ main() {
 
     it("update an item in the database, retrieve again to make sure its updated", () {
     routeVO.price1=10000;
-    return  model.updateItem(routeVO).then((Map newMap){
+    return  model.updateItem(routeVO).then((Map status){
       return  model.readItemByItem(routeVO).then((RouteVO vo){
+        expect(status['ok']).toEqual(1.0);
         expect(vo.price1).toEqual(routeVO.price1);
       });
     });
