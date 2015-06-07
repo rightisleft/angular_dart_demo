@@ -1,7 +1,8 @@
 import 'package:guinness/guinness.dart';
-import '../api_model.dart';
 import 'package:angular_dart_demo/shared/schemas.dart';
 import 'package:logging/logging.dart';
+
+import '../bin/api_model.dart';
 
 main() {
   BaseMongoModel model = new BaseMongoModel();
