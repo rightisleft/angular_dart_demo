@@ -52,11 +52,11 @@ class BaseMongoModel {
   }
 
   Future<List> readCollectionByType(t, [Map query = null]) async {
-    BaseVO freshInstance = getInstance(t);
     List list = new List();
+    BaseVO freshInstance = getInstance(t);
     return _getCollection(freshInstance.collection_key, query).then((items) {
       items.forEach((item) {
-        list.add(mapToVO(freshInstance, item));
+        list.add(mapToVO(getInstance(t), item));
       });
       return list;
     });
