@@ -15,6 +15,7 @@ class FlightDisplay extends Object {
   FlightQueryService queryService;
   FlightPostParamsVO params;
 
+  List<TimeVO> flight_times;
   List<RouteVO> routes;
 
   FlightDisplay(RouteProvider this.routeProvider, FlightQueryService this.queryService) {
@@ -26,7 +27,12 @@ class FlightDisplay extends Object {
   }
 
   void fetchData(FlightPostParamsVO params) {
-    queryService.fetchRoutes(params).then( (List<RouteVO> vos) {
+    queryService.fetchFlightTimes(params).then( (List<TimeVO> vos) {
+      flight_times = vos;
+    });
+
+    queryService.fetchRoutes(params).then( (List vos) {
+      vos.retainWhere( (RouteVO route) => (params.cityDepart + '_' + params.cityArrival) == route.route );
       routes = vos;
     });
   }

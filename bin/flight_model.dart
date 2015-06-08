@@ -10,10 +10,17 @@ class FlightDataModel extends Object with BaseMongoModel {
   }
 
   Future <List> getAllRoutes(Map params) {
+//    Map query = {'route': vo.cityDepart + "_" + vo.cityArrival};
     return readCollectionByType(RouteVO);
   }
 
   Future <List> getAllTimes(Map params) {
     return readCollectionByType(TimeVO);
+  }
+
+  Future <List> getTimesByCity(Map params) {
+    FlightPostParamsVO vo = new FlightPostParamsVO.FromPost(params);
+    Map query = {'arrival': vo.cityArrival, 'departure': vo.cityDepart};
+    return readCollectionByType(TimeVO, query);
   }
 }

@@ -21,14 +21,39 @@
             </thead>
             <tbody>
             <tr ng-repeat="route in routes">
-                <td>{{ route.route }}</td>
-                <td>{{ route.route }}</td>
+                <td>{{ route.getDepartureCity() }}</td>
+                <td>{{ route.getArrivalCity() }}</td>
                 <td>Direct</td>
                 <td>{{ route.duration }}</td>
                 <td>{{ route.price1 }}</td>
                 <td>{{ route.price2 }}</td>
                 <td>{{ route.price3 }}</td>
                 <td class="order"><span ng-click="onOrder(route)" class="btn btn-sm btn-primary">Order</span> </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</section>
+
+<section ng-if="flight_times != null" class="clearfix" ng-if="routes != null">
+    <form name="flight_display_form" ng-submit="onsubmit()" novalidate>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>Flight</th>
+                <th>Departure</th>
+                <th>TakeOff</th>
+                <th>Arrival</th>
+                <th class="order">Select</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="time in flight_times">
+                <td>{{ time.flight }}</td>
+                <td>{{ time.departure }}</td>
+                <td>{{ time.takeoff }}</td>
+                <td>{{ time.arrival }}</td>
+                <td class="order"><span ng-click="onOrder(time)" class="btn btn-sm btn-primary">Order</span> </td>
             </tr>
             </tbody>
         </table>

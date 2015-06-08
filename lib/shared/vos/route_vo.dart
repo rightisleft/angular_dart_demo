@@ -11,4 +11,12 @@ class RouteVO extends BaseVO {
   num price2;
   num price3;
   int seats;
+
+  String getDepartureCity() {
+    return route.split('_')[0];
+  }
+
+  String getArrivalCity() {
+    return route.split('_')[1];
+  }
 }
