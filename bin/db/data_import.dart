@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:async';
 import 'package:json_object/json_object.dart';
 import 'package:mongo_dart/mongo_dart.dart';
-import 'package:angular_dart_demo/shared/schemas.dart';
 
 
 main() {
@@ -20,53 +19,69 @@ class DataImporterJIT {
   void _readFile() {
     File aFile = new File(_dbSeedFile);
     aFile.readAsString()
-      .then( (String item) => new JsonObject.fromJsonString(item) )
-      .then( _printJson )
-      .then( _insertJsonToMongo )
-      .then( _mapTimeToRoute );
+    .then((String item) => new JsonObject.fromJsonString(item))
+    .then(_printJson)
+    .then(_insertJsonToMongo)
+    .then(_mapTimeToRoute)
+    .then(_closeDatabase);
   }
 
   Future<Db> _insertJsonToMongo(JsonObject json) async
   {
     Db database = new Db(_dbURI + _dbName);
     await database.open();
-    json.keys.forEach((String collectionName)
-    {
-      DbCollection collection = new DbCollection(database, collectionName);
-      print(' json[collectionName]');
-      print(json[collectionName]);
-      collection.insertAll( json[collectionName] );
+    json.keys.forEach((String collectionName) {
+      DbCollection collection = new DbCollection(database, collectionName); //grabs the collection instance
+      collection.insertAll(json[collectionName]); //takes a list of maps and writes to a collection
     });
     return database;
   }
 
-  Future _mapTimeToRoute(Db database) async{
-    DbCollection timeCollection = database.collection('Times');
-    DbCollection routes = database.collection('Routes');
 
-    timeCollection.find().toList().then((List times){
-      times.forEach((time){
-        var route = time['departure'] + '_' + time['arrival'];
-        routes.find({'route': route}).nextObject().then((Map item){
-          time['route_id'] = item['_id'];
-          timeCollection.save(time);
-        });
+  Future _mapTimeToRoute(Db database) {
+
+    DbCollection timeCollection = database.collection('Times');
+    DbCollection routesCollection = database.collection('Routes');
+
+    //return initial future
+    return timeCollection.find().toList().then( ( List times) {
+
+      // each 'time' value has an async process to read and write
+      // we want the transaction to complete prior to finishing the Future
+      return Future.forEach(times, (time) async {
+
+        //create a key
+        var routeKey = time['departure'] + '_' + time['arrival'];
+
+        //retrieve the route
+        List routes = await routesCollection.find({'route': routeKey}).toList();
+
+        // this is the core goal
+        time['route_id'] = routes.first['_id'];
+
+        // only complete the future when the sav is finished
+        await timeCollection.save(time);
+      }).then((_){
+        return database;
       });
     });
-    return null;
   }
 
-  JsonObject _printJson(JsonObject json)
-  {
-    json.keys.forEach((String collection)
-    {
+  JsonObject _printJson(JsonObject json) {
+    json.keys.forEach((String collection) {
       print('Collections: ' + collection);
       var documents = json[collection];
-      print('Document: '+ documents.toString() );
-      documents.forEach((row){
-        print('Row: ' + row.toString() );
+      print('Document: ' + documents.toString());
+      documents.forEach((row) {
+        print('Row: ' + row.toString());
       });
     });
     return json;
+  }
+
+  void _closeDatabase(Db database) {
+    database.close().then( (_) {
+      exit(0);
+    });
   }
 }
