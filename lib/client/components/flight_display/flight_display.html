@@ -40,18 +40,20 @@
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
-                <th>Flight</th>
-                <th>Departure</th>
-                <th>TakeOff</th>
-                <th>Arrival</th>
+                <th>Flight #</th>
+                <th>TakeOff Time</th>
+                <th>Landing Time</th>
+                <th>Departure City</th>
+                <th>Arrival City</th>
                 <th class="order">Select</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="time in flight_times">
                 <td>{{ time.flight }}</td>
-                <td>{{ time.departure }}</td>
                 <td>{{ time.takeoff }}</td>
+                <td>{{ time.takeoff + time.rvo.duration }}</td>
+                <td>{{ time.departure }}</td>
                 <td>{{ time.arrival }}</td>
                 <td class="order"><span ng-click="onOrder(time)" class="btn btn-sm btn-primary">Order</span> </td>
             </tr>

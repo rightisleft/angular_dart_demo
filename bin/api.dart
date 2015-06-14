@@ -2,9 +2,13 @@ import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:shelf_route/shelf_route.dart';
 import 'api_controller.dart' as controller;
-
+import 'package:logging/logging.dart';
 
 main() {
+  //globals
+//  Logger.root..level = Level.FINEST
+//    ..onRecord.listen((LogRecord r) { print(r.message); });
+
   Router airRouter = router();
   Router tickets = airRouter.child('/tickets');
   tickets.add('/cities', ['GET'], controller.handleCitites);
@@ -32,7 +36,7 @@ shelf.Response reqHandler(shelf.Request request){
   {
     return new shelf.Response.ok(null, headers: CORSHeader);
   }
-  return null; // move along
+  return null; // nothing to see here... move along
 }
 
 shelf.Response respHandler(shelf.Response response) {

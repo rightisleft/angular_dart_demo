@@ -18,9 +18,16 @@ class FlightDataModel extends Object with BaseMongoModel {
     return readCollectionByType(TimeVO);
   }
 
-  Future <List> getTimesByCity(Map params) {
+  getTimesByCity(Map params) async {
     FlightPostParamsVO vo = new FlightPostParamsVO.FromPost(params);
+
     Map query = {'arrival': vo.cityArrival, 'departure': vo.cityDepart};
-    return readCollectionByType(TimeVO, query);
+    List<TimeVO> time_vos = await readCollectionByType(TimeVO, query);
+
+    query = {'route': time_vos.first.departure + "_" + time_vos.first.arrival};
+    return readCollectionByType(RouteVO, query).then((List rvos) {
+      time_vos.forEach((TimeVO vo) => vo.rvo = rvos.first);
+      return time_vos;
+    });
   }
 }

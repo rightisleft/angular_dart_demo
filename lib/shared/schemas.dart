@@ -4,6 +4,7 @@ import 'package:angular/di/module.dart'; // enables @injectable w/o a dependency
 import 'package:dartson/dartson.dart';
 import 'package:intl/intl.dart';
 
+
 //Injectables
 part 'vos/base_vo.dart';
 part 'vos/booking_vo.dart';

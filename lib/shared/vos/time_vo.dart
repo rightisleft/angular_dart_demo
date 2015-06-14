@@ -8,5 +8,6 @@ class TimeVO extends BaseVO {
   int flight;
   String departure;
   String arrival;
-  String takeoff;
+  int takeoff;
+  RouteVO rvo;
 }

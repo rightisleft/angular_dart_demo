@@ -42,3 +42,11 @@ class FlightDisplay extends Object {
     print(route.route);
   }
 }
+
+class ViewModel {
+  RouteVO rvo;
+  TimeVO tvo;
+  ViewModel(this.rvo,this.tvo){
+
+  }
+}

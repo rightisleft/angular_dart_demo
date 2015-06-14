@@ -8,8 +8,6 @@ main() {
   BaseMongoModel model = new BaseMongoModel();
   RouteVO routeVO = new RouteVO()..duration=120..price1=90.00..price2=91.00..price3=95.00..seats=7;
 
-  Logger.root..level = Level.FINE
-    ..onRecord.listen((LogRecord r) { print(r.message); });
 
   it("should create a record VO and write to the db", () {
     return  model.createByItem(routeVO).then(( Map status ) {

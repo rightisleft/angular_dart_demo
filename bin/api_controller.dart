@@ -36,10 +36,6 @@ Future <Response> handleTickets(Request request) async {
   return _genericJsonHandler(model.getAllTimes, request);
 }
 
-Future <Response> fallback(Request request) async {
-  return _genericJsonHandler((){}, request);
-}
-
 Future <Response> _genericJsonHandler(Function getter, Request request) async {
   return getParams(request)
   .then( ( params ) => getter( params ) )

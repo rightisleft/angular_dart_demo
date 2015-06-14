@@ -22,7 +22,7 @@ class DataImporterJIT {
     .then((String item) => new JsonObject.fromJsonString(item))
     .then(_printJson)
     .then(_insertJsonToMongo)
-    .then(_mapTimeToRoute)
+//    .then(_mapTimeToRoute)
     .then(_closeDatabase);
   }
 

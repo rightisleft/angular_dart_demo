@@ -51,6 +51,17 @@ class BaseMongoModel {
     });
   }
 
+  Future<List> readCollectionByTypeWhere(t, fieldName, values) async {
+    List list = new List();
+    BaseVO freshInstance = getInstance(t);
+    return _getCollectionWhere(freshInstance.collection_key, fieldName, values).then((items) {
+      items.forEach((item) {
+        list.add(mapToVO(getInstance(t), item));
+      });
+      return list;
+    });
+  }
+
   Future<List> readCollectionByType(t, [Map query = null]) async {
     List list = new List();
     BaseVO freshInstance = getInstance(t);
@@ -76,6 +87,16 @@ class BaseMongoModel {
   }
 
   // Some Abstractions
+
+  Future<List> _getCollectionWhere(String collectionName, fieldName, values) {
+    return _dbPool.openNewConnection().then((Db conn) async {
+      DbCollection collection = new DbCollection(conn, collectionName);
+      return await collection.find( where.oneFrom(fieldName, values) ).toList().then((map) {
+        _dbPool.closeConnection(conn);
+        return map;
+      });
+    });
+  }
 
   Future<List> _getCollection(String collectionName, [Map query = null]) {
     return _dbPool.openNewConnection().then((Db conn) async {

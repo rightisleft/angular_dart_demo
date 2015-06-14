@@ -1,6 +1,5 @@
 import 'package:angular/application_factory.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/animate/module.dart';
 import 'package:logging/logging.dart';
 
 import 'package:bootjack/bootjack.dart';
@@ -29,14 +28,4 @@ void main() {
   applicationFactory()
   .addModule( new JitAppModule() )
   .run();
-}
-
-class AnimationDemoModule extends Module {
-  AnimationDemoModule() {
-    install(new AnimationModule());
-    bind(RepeatDemo);
-    bind(VisibilityDemo);
-    bind(StressDemo);
-    bind(CssDemo);
-  }
 }

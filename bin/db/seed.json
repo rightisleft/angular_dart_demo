@@ -150,181 +150,181 @@
             "flight": 1001,
             "departure": "SAN",
             "arrival": "SFO",
-            "takeoff": "600"
+            "takeoff": 600
         },
         {
             "flight": 1002,
             "departure": "LAX",
             "arrival": "SFO",
-            "takeoff": "630"
+            "takeoff": 630
         },
         {
             "flight": 1003,
             "departure": "OAK",
             "arrival": "SMF",
-            "takeoff": "700"
+            "takeoff": 700
         },
         {
             "flight": 1004,
             "departure": "LAX",
             "arrival": "SAN",
-            "takeoff": "730"
+            "takeoff": 730
         },
         {
             "flight": 1005,
             "departure": "SMF",
             "arrival": "SFO",
-            "takeoff": "800"
+            "takeoff": 800
         },
         {
             "flight": 1006,
             "departure": "SAN",
             "arrival": "SFO",
-            "takeoff": "830"
+            "takeoff": 830
         },
         {
             "flight": 1007,
             "departure": "SAN",
             "arrival": "LAX",
-            "takeoff": "900"
+            "takeoff": 900
         },
         {
             "flight": 1008,
             "departure": "OAK",
             "arrival": "LAX",
-            "takeoff": "930"
+            "takeoff": 930
         },
         {
             "flight": 1009,
             "departure": "OAK",
             "arrival": "SAN",
-            "takeoff": "1000"
+            "takeoff": 1000
         },
         {
             "flight": 1010,
             "departure": "SAN",
             "arrival": "SMF",
-            "takeoff": "1030"
+            "takeoff": 1030
         },
         {
             "flight": 1011,
             "departure": "SFO",
             "arrival": "LAX",
-            "takeoff": "1100"
+            "takeoff": 1100
         },
         {
             "flight": 1012,
             "departure": "OAK",
             "arrival": "SAN",
-            "takeoff": "1130"
+            "takeoff": 1130
         },
         {
             "flight": 1013,
             "departure": "LAX",
             "arrival": "SFO",
-            "takeoff": "1200"
+            "takeoff": 1200
         },
         {
             "flight": 1014,
             "departure": "SAN",
             "arrival": "LAX",
-            "takeoff": "1230"
+            "takeoff": 1230
         },
         {
             "flight": 1015,
             "departure": "SFO",
             "arrival": "SMF",
-            "takeoff": "1300"
+            "takeoff": 1300
         },
         {
             "flight": 1016,
             "departure": "SFO",
             "arrival": "SAN",
-            "takeoff": "1000"
+            "takeoff": 1000
         },
         {
             "flight": 1017,
             "departure": "SFO",
             "arrival": "LAX",
-            "takeoff": "1030"
+            "takeoff": 1030
         },
         {
             "flight": 1018,
             "departure": "SMF",
             "arrival": "OAK",
-            "takeoff": "1100"
+            "takeoff": 1100
         },
         {
             "flight": 1019,
             "departure": "SAN",
             "arrival": "LAX",
-            "takeoff": "1130"
+            "takeoff": 1130
         },
         {
             "flight": 1020,
             "departure": "SFO",
             "arrival": "SMF",
-            "takeoff": "1200"
+            "takeoff": 1200
         },
         {
             "flight": 1021,
             "departure": "SFO",
             "arrival": "SAN",
-            "takeoff": "1230"
+            "takeoff": 1230
         },
         {
             "flight": 1022,
             "departure": "LAX",
             "arrival": "SAN",
-            "takeoff": "1300"
+            "takeoff": 1300
         },
         {
             "flight": 1023,
             "departure": "LAX",
             "arrival": "OAK",
-            "takeoff": "1330"
+            "takeoff": 1330
         },
         {
             "flight": 1024,
             "departure": "SAN",
             "arrival": "OAK",
-            "takeoff": "1400"
+            "takeoff": 1400
         },
         {
             "flight": 1025,
             "departure": "SMF",
             "arrival": "SAN",
-            "takeoff": "1430"
+            "takeoff": 1430
         },
         {
             "flight": 1026,
             "departure": "LAX",
             "arrival": "SFO",
-            "takeoff": "1500"
+            "takeoff": 1500
         },
         {
             "flight": 1027,
             "departure": "SAN",
             "arrival": "OAK",
-            "takeoff": "1530"
+            "takeoff": 1530
         },
         {
             "flight": 1028,
             "departure": "SFO",
             "arrival": "LAX",
-            "takeoff": "1600"
+            "takeoff": 1600
         },
         {
             "flight": 1029,
             "departure": "LAX",
             "arrival": "SAN",
-            "takeoff": "1630"
+            "takeoff": 1630
         },
         {
             "flight": 1030,
             "departure": "SMF",
             "arrival": "SFO",
-            "takeoff": "1700"
+            "takeoff": 1700
         }
     ],
     "Cities": [
@@ -361,13 +361,13 @@
             "email": "jack@rightisleft.com",
             "phone": 4153076618,
             "address": "162 West 80th St #E, New York, NY, 10024",
-            "flight": "empty",
-            "transaction": "empty"
+            "flight": "null",
+            "transaction": "null"
         }
     ],
     "Transactions": [
         {
-            "amount": 100.00,
+            "amount": 100,
             "user": "jack@rightisleft.com"
         }
     ]
