@@ -9,5 +9,5 @@ class TimeVO extends BaseVO {
   String departure;
   String arrival;
   int takeoff;
-  RouteVO rvo;
+  RouteVO route;
 }

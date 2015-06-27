@@ -7,11 +7,6 @@ class FlightQueryService{
 
   FlightQueryService(Http this._http) {}
 
-  Future fetchRoutes(FlightPostParamsVO params) async {
-    Map post = params.toPostable();
-    return _http.post(BASE + 'routes', post ).then(handleRoutes);
-  }
-
   Future fetchFlightTimes(FlightPostParamsVO params) async {
     Map post = params.toPostable();
     return _http.post(BASE + 'times', post ).then(handleTimes);

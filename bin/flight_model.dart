@@ -9,16 +9,12 @@ class FlightDataModel extends Object with BaseMongoModel {
     return readCollectionByType(CitiesVO);
   }
 
-  Future <List> getAllRoutes(Map params) {
-//    Map query = {'route': vo.cityDepart + "_" + vo.cityArrival};
-    return readCollectionByType(RouteVO);
-  }
-
   Future <List> getAllTimes(Map params) {
     return readCollectionByType(TimeVO);
   }
 
-  getTimesByCity(Map params) async {
+  //Nested Dartson Example
+  Future getTimesByCity(Map params) async {
     FlightPostParamsVO vo = new FlightPostParamsVO.FromPost(params);
 
     Map query = {'arrival': vo.cityArrival, 'departure': vo.cityDepart};
@@ -26,7 +22,7 @@ class FlightDataModel extends Object with BaseMongoModel {
 
     query = {'route': time_vos.first.departure + "_" + time_vos.first.arrival};
     return readCollectionByType(RouteVO, query).then((List rvos) {
-      time_vos.forEach((TimeVO vo) => vo.rvo = rvos.first);
+      time_vos.forEach((TimeVO vo) => vo.route = rvos.first);
       return time_vos;
     });
   }

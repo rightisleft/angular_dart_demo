@@ -9,8 +9,10 @@ part of jit_frontend;
 class FlightDisplay extends Object {
 
   RouteProvider routeProvider;
+  Router router;
 
   NgForm flight_display_form;
+  num service_level;
 
   FlightQueryService queryService;
   FlightPostParamsVO params;
@@ -18,7 +20,7 @@ class FlightDisplay extends Object {
   List<TimeVO> flight_times;
   List<RouteVO> routes;
 
-  FlightDisplay(RouteProvider this.routeProvider, FlightQueryService this.queryService) {
+  FlightDisplay(Router this.router, RouteProvider this.routeProvider, FlightQueryService this.queryService) {
     if(routeProvider.parameters.isEmpty == false)
     {
       params = new FlightPostParamsVO.FromPost(routeProvider.parameters);
@@ -30,23 +32,12 @@ class FlightDisplay extends Object {
     queryService.fetchFlightTimes(params).then( (List<TimeVO> vos) {
       flight_times = vos;
     });
-
-    queryService.fetchRoutes(params).then( (List vos) {
-      vos.retainWhere( (RouteVO route) => (params.cityDepart + '_' + params.cityArrival) == route.route );
-      routes = vos;
-    });
   }
 
-  void onOrder(RouteVO route)
+  void onsubmit(TimeVO time)
   {
-    print(route.route);
-  }
-}
-
-class ViewModel {
-  RouteVO rvo;
-  TimeVO tvo;
-  ViewModel(this.rvo,this.tvo){
-
+    print(service_level);
+    print(time);
+    router.go('order', {'id': time.flight, 'level': service_level});
   }
 }

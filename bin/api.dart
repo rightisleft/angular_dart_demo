@@ -13,7 +13,6 @@ main() {
   Router tickets = airRouter.child('/tickets');
   tickets.add('/cities', ['GET'], controller.handleCitites);
   tickets.add('/times', ['POST'], controller.handleTimesCity);
-  tickets.add('/routes', ['POST'], controller.handleRoutes);
   tickets.add('/{id}/tickets/', ['GET'], controller.handleTickets);
 
   var handler = const shelf.Pipeline()

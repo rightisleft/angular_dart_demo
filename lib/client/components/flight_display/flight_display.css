@@ -9,3 +9,8 @@ section {
 .order {
     text-align: center;
 }
+
+input[type="radio"] {
+    float: left;
+    margin-right: 8px;
+}

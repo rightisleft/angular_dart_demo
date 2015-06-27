@@ -20,10 +20,6 @@ Future <Response> handleCitites(Request request) async {
   return _genericJsonHandler(model.getAllCities, request);
 }
 
-Future <Response> handleRoutes(Request request) async {
-  return _genericJsonHandler(model.getAllRoutes, request);
-}
-
 Future <Response> handleTimesCity(Request request) async {
   return _genericJsonHandler(model.getTimesByCity, request);
 }
