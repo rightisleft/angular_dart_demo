@@ -12,6 +12,10 @@ class FlightQueryService{
     return _http.post(BASE + 'times', post ).then(handleTimes);
   }
 
+  Future fetchFlightByNumber(num id) async {
+    return _http.get(BASE + 'flight/' + id.toString()).then(handleTimes);
+  }
+
   Future fetchCities() async {
     return _http.get(BASE + 'cities').then(handleCities);
   }

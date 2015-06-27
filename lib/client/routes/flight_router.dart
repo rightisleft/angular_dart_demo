@@ -12,7 +12,7 @@ flightRoutes(Router router, RouteViewFactory views) {
   var rFlights    = ngRoute(path: '/picker', view: 'views/picker.html');
   var rFlightsId  = ngRoute(path: '/picker/:cityDepart/:cityArrival/:dateDepart/:dateArrival/', view: 'views/picker.html');
   var rContact    = ngRoute(path: '/contact', view: 'views/contact.html');
-  var rOrder      = ngRoute(path: '/order/:id/:level/', view: 'views/order.html');
+  var rOrder      = ngRoute(path: '/order/:id/:level/:dateDepart/:dateArrival/', view: 'views/order.html');
   var rDefault    = ngRoute(defaultRoute: true, enter: errorHandler );
 
 

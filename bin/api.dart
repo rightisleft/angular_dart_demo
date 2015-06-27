@@ -11,6 +11,7 @@ main() {
 
   Router airRouter = router();
   Router tickets = airRouter.child('/tickets');
+  tickets.add('/flight/{flight}', ['GET'], controller.handleFlightNumber);
   tickets.add('/cities', ['GET'], controller.handleCitites);
   tickets.add('/times', ['POST'], controller.handleTimesCity);
   tickets.add('/{id}/tickets/', ['GET'], controller.handleTickets);

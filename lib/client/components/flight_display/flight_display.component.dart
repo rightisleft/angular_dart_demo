@@ -36,8 +36,9 @@ class FlightDisplay extends Object {
 
   void onsubmit(TimeVO time)
   {
-    print(service_level);
-    print(time);
-    router.go('order', {'id': time.flight, 'level': service_level});
+    var post = params.toPostable();
+    post['id'] = time.flight;
+    post['level'] = service_level;
+    router.go('order', post);
   }
 }

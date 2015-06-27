@@ -13,6 +13,12 @@ class FlightPostParamsVO {
     return {'cityDepart': cityDepart, 'cityArrival': cityArrival, 'dateDepart': f.format( dateDepart ) , 'dateArrival': f.format( dateArrival ) };
   }
 
+  String format(DateTime value)
+  {
+    var f = new DateFormat.yMMMMd('en_US');
+    return f.format(value);
+  }
+
   factory FlightPostParamsVO.FromPost(Map aMap) {
     FlightPostParamsVO instance = new FlightPostParamsVO();
     instance.setup(aMap, instance);
