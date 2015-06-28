@@ -35,14 +35,21 @@ Future <Response> handleTimes(Request request) async {
 }
 
 Future <Response> handleTickets(Request request) async {
-  return _genericJsonHandler(model.getAllTimes, request);
+  return _200Handler(model.createPurchase, request);
+}
+
+Future <Response> _200Handler(Function getter, Request request) async {
+  return getPostParams(request)
+  .then( ( params ) => getPathParams( request , params ) )
+  .then( ( json ) => getter( json ) )
+  .then( (json ) => new Response.ok('') );
 }
 
 Future <Response> _genericJsonHandler(Function getter, Request request) async {
   return getPostParams(request)
   .then( ( params ) => getPathParams( request , params ) )
   .then( ( json ) => getter( json ) )
-  .then( ( list ) => _listToJson( list ) )
+  .then( ( list ) => _dartsonListToJson( list ) )
   .then( makeResponse );
 }
 
@@ -51,7 +58,7 @@ Future<Response> makeResponse( json ) async {
   return response;
 }
 
-String _listToJson(List list) {
+String _dartsonListToJson(List list) {
   dynamic encodable = converter.serialize(list);
   return JSON.encode(encodable);
 }
