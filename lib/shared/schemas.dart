@@ -10,10 +10,11 @@ part 'vos/base_vo.dart';
 part 'vos/booking_vo.dart';
 part 'vos/cities_vo.dart';
 part 'vos/route_vo.dart';
+part 'vos/purchase_dto.dart';
 part 'vos/time_vo.dart';
 part 'vos/transaction_vo.dart';
 
 //Libraries
 part 'vos/flight_post_params_vo.dart';
 
-const List<Type> schema_classes = const [RouteVO, BookingVO, CitiesVO, TimeVO, TransactionVO];
+const List<Type> schema_classes = const [RouteVO, BookingVO, CitiesVO, TimeVO, TransactionVO, PurchaseDTO];

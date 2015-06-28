@@ -14,6 +14,9 @@ class OrderForm extends Object implements ScopeAware {
   TimeVO flightVO;
   Recap recap;
   Scope _scope;
+  PurchaseDTO dto= new PurchaseDTO();
+  NgForm orderForm;
+
 
   OrderForm(Router this._router, RouteProvider this._routeProvider, FlightQueryService this.queryService) {
    fetch();
@@ -22,8 +25,10 @@ class OrderForm extends Object implements ScopeAware {
   void fetch() {
     if(_routeProvider != null && _routeProvider.parameters.isEmpty == false)
     {
-      queryService.fetchFlightByNumber(1001).then((List<TimeVO> vos){
+      queryService.fetchFlightByNumber(int.parse(_routeProvider.parameters['id'])).then((List<TimeVO> vos){
         flightVO = vos.first;
+        dto.flightID = flightVO.flight;
+        dto.flightLevel = int.parse(_routeProvider.parameters['level']);
         _scope.rootScope.emit('flight', flightVO);
       });
     }
@@ -35,8 +40,10 @@ class OrderForm extends Object implements ScopeAware {
     this._scope = scope;
   }
 
-  onSubmit(NgForm form)
+  onSubmit()
   {
-
+    print(orderForm);
+    print(dto);
+    print('--complete--');
   }
 }
