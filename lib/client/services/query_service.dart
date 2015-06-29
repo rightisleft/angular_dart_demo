@@ -20,6 +20,10 @@ class FlightQueryService{
     return _http.get(BASE + 'cities').then(handleCities);
   }
 
+  Future purchaseTicket(String json) async {
+    return _http.post(BASE + 'purchase', json).then(handlePurchase);
+  }
+
   List<TimeVO> handleTimes(HttpResponse response) {
     Dartson converter = new Dartson.JSON();
     var string = JSON.encode(response.data);
@@ -38,6 +42,13 @@ class FlightQueryService{
     Dartson converter = new Dartson.JSON();
     var string = JSON.encode(response.data);
     List<CitiesVO> vos = converter.decode(string, new CitiesVO(), true);
+    return vos;
+  }
+
+  List<TransactionVO> handlePurchase(HttpResponse response) {
+    Dartson converter = new Dartson.JSON();
+    var string = JSON.encode(response.data);
+    List<TransactionVO> vos = converter.decode(string, new TransactionVO(), true);
     return vos;
   }
 }

@@ -24,7 +24,12 @@ class BaseMongoModel {
       Map aMap = voToMongoMap(item);
       return collection.insert(aMap).then((_) {
         _dbPool.closeConnection(database);
-        return _;
+        if(_['ok'] == 1)
+        {
+          return [item];
+        } else {
+          return _;
+        }
       });
     });
   }

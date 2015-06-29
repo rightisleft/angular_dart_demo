@@ -10,7 +10,7 @@ class FlightDataModel extends Object with BaseMongoModel {
     var dson = new Dartson.JSON();
     PurchaseDTO object = dson.map(params, new PurchaseDTO() );
     TransactionVO tvo = new TransactionVO();
-    tvo.amount = 100.00;
+    tvo.paid = 100;
     tvo.user = object.pEmail;
     return createByItem(tvo);
   }

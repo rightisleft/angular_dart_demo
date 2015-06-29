@@ -4,6 +4,6 @@ part of jit_schemas;
 @Entity()
 class TransactionVO extends BaseVO {
   String collection_key = "Transactions";
-  double amount;
+  int paid;
   String user;
 }

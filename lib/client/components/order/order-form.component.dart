@@ -16,9 +16,10 @@ class OrderForm extends Object implements ScopeAware {
   Scope _scope;
   PurchaseDTO dto= new PurchaseDTO();
   NgForm orderForm;
+  SharedData sharedVO;
 
 
-  OrderForm(Router this._router, RouteProvider this._routeProvider, FlightQueryService this.queryService) {
+  OrderForm(Router this._router, RouteProvider this._routeProvider, FlightQueryService this.queryService, SharedData this.sharedVO) {
    fetch();
   }
 
@@ -48,5 +49,9 @@ class OrderForm extends Object implements ScopeAware {
     var dson = new Dartson.JSON();
     String jsonString = dson.encode(dto);
     print(jsonString);
+    queryService.purchaseTicket(jsonString).then((List<TransactionVO >response){
+      sharedVO.transaction = response.first;
+      _router.go('success', {});
+    });
   }
 }

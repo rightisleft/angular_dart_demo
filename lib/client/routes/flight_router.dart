@@ -13,6 +13,7 @@ flightRoutes(Router router, RouteViewFactory views) {
   var rFlightsId  = ngRoute(path: '/picker/:cityDepart/:cityArrival/:dateDepart/:dateArrival/', view: 'views/picker.html');
   var rContact    = ngRoute(path: '/contact', view: 'views/contact.html');
   var rOrder      = ngRoute(path: '/order/:id/:level/:dateDepart/:dateArrival/', view: 'views/order.html');
+  var rSuccess      = ngRoute(path: '/order/success', view: 'packages/angular_dart_demo/client/components/order/success.html');
   var rDefault    = ngRoute(defaultRoute: true, enter: errorHandler );
 
 
@@ -24,6 +25,7 @@ flightRoutes(Router router, RouteViewFactory views) {
                 'contact': rContact,
                 'order': rOrder,
                 'picker': rFlights,
+                'success': rSuccess,
                 'flightsId': rFlightsId,
                 'view_default': rDefault };
 

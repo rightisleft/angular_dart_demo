@@ -35,7 +35,7 @@ Future <Response> handleTimes(Request request) async {
 }
 
 Future <Response> handleTickets(Request request) async {
-  return _200Handler(model.createPurchase, request);
+  return _genericJsonHandler(model.createPurchase, request);
 }
 
 Future <Response> _200Handler(Function getter, Request request) async {

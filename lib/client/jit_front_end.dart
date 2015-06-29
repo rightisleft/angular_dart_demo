@@ -14,6 +14,8 @@ import 'package:angular_dart_demo/shared/schemas.dart';
 
 //lib
 part 'services/query_service.dart';
+part 'services/shared_data.dart';
+
 part 'routes/flight_router.dart';
 part 'routes/rref.dart';
 part 'components/search/search_component.dart';
@@ -24,6 +26,7 @@ part 'components/picker/picker.component.dart';
 part 'components/flight_display/flight_display.component.dart';
 
 const List<Type> client_classes = const [ FlightDisplay,
+  SharedData,
   Picker,
   Rref,
   Recap,
