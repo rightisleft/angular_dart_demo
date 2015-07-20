@@ -3,6 +3,7 @@ library jit_models;
 import 'dart:async';
 import 'package:angular_dart_demo/shared/schemas.dart';
 import 'package:mongo_dart/mongo_dart.dart';
+import 'package:connection_pool/connection_pool.dart';
 import 'mongo_pool.dart';
 import "dart:mirrors";
 
@@ -14,17 +15,17 @@ class Config {
 
 class BaseMongoModel {
 
-  static final MongoDbPool _dbPool = new MongoDbPool(Config.DATABASE_URL + Config.DATABASE_NAME, 10);
+  static final MongoPool _dbPool = new MongoPool(Config.DATABASE_URL + Config.DATABASE_NAME, 10);
 
   Future<Map> createByItem(BaseVO item) async {
     assert(item.id == null);
     item.id = new ObjectId();
-    return _dbPool.getOpenDB().then((Db database) {
-      DbCollection collection = database.collection(item.collection_key);
+    return _dbPool.getConnection().then((ManagedConnection mc) {
+      DbCollection collection = mc.conn.collection(item.collection_key);
       Map aMap = voToMongoMap(item);
       print(item);
       return collection.insert(aMap).then((_) {
-        _dbPool.closeConnection(database);
+        _dbPool.releaseConnection(mc);
         if(_['ok'] == 1)
         {
           return [item];
@@ -37,11 +38,12 @@ class BaseMongoModel {
 
   Future<Map> deleteByItem(BaseVO item) async {
     assert(item.id != null);
-    return _dbPool.getOpenDB().then((Db database) {
+    return _dbPool.getConnection().then((ManagedConnection mc) {
+      Db database = mc.conn;
       DbCollection collection = database.collection(item.collection_key);
       Map aMap = voToMongoMap(item);
       return collection.remove(aMap).then((_) {
-        _dbPool.closeConnection(database);
+        _dbPool.releaseConnection(mc);
         return _;
       });
     });
@@ -81,12 +83,13 @@ class BaseMongoModel {
 
   Future<Map> updateItem(BaseVO item) async {
     assert(item.id != null);
-    return _dbPool.getOpenDB().then((Db database) async {
+    return _dbPool.getConnection().then((ManagedConnection mc) async {
+      Db database = mc.conn;
       DbCollection collection = new DbCollection(database, item.collection_key);
       Map selector = {'_id': item.id};
       Map newItem = voToMongoMap(item);
       return await collection.update(selector, newItem).then((_) {
-        _dbPool.closeConnection(database);
+        _dbPool.releaseConnection(mc);
         return _;
       });
     });
@@ -95,20 +98,21 @@ class BaseMongoModel {
   // Some Abstractions
 
   Future<List> _getCollectionWhere(String collectionName, fieldName, values) {
-    return _dbPool.getOpenDB().then((Db conn) async {
-      DbCollection collection = new DbCollection(conn, collectionName);
+    return _dbPool.getConnection().then((ManagedConnection mc) async {
+      Db database = mc.conn;
+      DbCollection collection = new DbCollection(database, collectionName);
       return await collection.find( where.oneFrom(fieldName, values) ).toList().then((map) {
-        _dbPool.closeConnection(conn);
+        _dbPool.releaseConnection(mc);
         return map;
       });
     });
   }
 
   Future<List> _getCollection(String collectionName, [Map query = null]) {
-    return _dbPool.getOpenDB().then((Db conn) async {
-      DbCollection collection = new DbCollection(conn, collectionName);
+    return _dbPool.getConnection().then((ManagedConnection mc) async {
+      DbCollection collection = new DbCollection(mc.conn, collectionName);
       return await collection.find(query).toList().then((map) {
-        _dbPool.closeConnection(conn);
+        _dbPool.releaseConnection(mc);
         return map;
       });
     });

@@ -2,26 +2,20 @@ import 'package:connection_pool/connection_pool.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'dart:async';
 
-class MongoDbPool extends ConnectionPool<Db> {
+class MongoPool extends ConnectionPool<Db> {
 
   String uri;
 
-  MongoDbPool(String this.uri, int poolSize) : super(poolSize);
+  MongoPool(String this.uri, int poolSize) : super(poolSize);
 
-  @override
+  //overrides ConnectionPool
   void closeConnection(Db conn) {
     conn.close();
   }
 
-  @override
+  //overrides ConnectionPool
   Future<Db> openNewConnection() {
     var conn = new Db(uri);
     return conn.open().then((_) => conn);
-  }
-
-  Future<Db> getOpenDB() {
-    return this.getConnection().then((ManagedConnection mc){
-      return mc.conn;
-    });
   }
 }
