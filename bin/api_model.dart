@@ -19,9 +19,10 @@ class BaseMongoModel {
   Future<Map> createByItem(BaseVO item) async {
     assert(item.id == null);
     item.id = new ObjectId();
-    return _dbPool.openNewConnection().then((Db database) {
+    return _dbPool.getOpenDB().then((Db database) {
       DbCollection collection = database.collection(item.collection_key);
       Map aMap = voToMongoMap(item);
+      print(item);
       return collection.insert(aMap).then((_) {
         _dbPool.closeConnection(database);
         if(_['ok'] == 1)
@@ -36,7 +37,7 @@ class BaseMongoModel {
 
   Future<Map> deleteByItem(BaseVO item) async {
     assert(item.id != null);
-    return _dbPool.openNewConnection().then((Db database) {
+    return _dbPool.getOpenDB().then((Db database) {
       DbCollection collection = database.collection(item.collection_key);
       Map aMap = voToMongoMap(item);
       return collection.remove(aMap).then((_) {
@@ -80,7 +81,7 @@ class BaseMongoModel {
 
   Future<Map> updateItem(BaseVO item) async {
     assert(item.id != null);
-    return _dbPool.openNewConnection().then((Db database) async {
+    return _dbPool.getOpenDB().then((Db database) async {
       DbCollection collection = new DbCollection(database, item.collection_key);
       Map selector = {'_id': item.id};
       Map newItem = voToMongoMap(item);
@@ -94,7 +95,7 @@ class BaseMongoModel {
   // Some Abstractions
 
   Future<List> _getCollectionWhere(String collectionName, fieldName, values) {
-    return _dbPool.openNewConnection().then((Db conn) async {
+    return _dbPool.getOpenDB().then((Db conn) async {
       DbCollection collection = new DbCollection(conn, collectionName);
       return await collection.find( where.oneFrom(fieldName, values) ).toList().then((map) {
         _dbPool.closeConnection(conn);
@@ -104,7 +105,7 @@ class BaseMongoModel {
   }
 
   Future<List> _getCollection(String collectionName, [Map query = null]) {
-    return _dbPool.openNewConnection().then((Db conn) async {
+    return _dbPool.getOpenDB().then((Db conn) async {
       DbCollection collection = new DbCollection(conn, collectionName);
       return await collection.find(query).toList().then((map) {
         _dbPool.closeConnection(conn);

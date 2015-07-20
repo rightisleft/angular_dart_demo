@@ -18,4 +18,10 @@ class MongoDbPool extends ConnectionPool<Db> {
     var conn = new Db(uri);
     return conn.open().then((_) => conn);
   }
+
+  Future<Db> getOpenDB() {
+    return this.getConnection().then((ManagedConnection mc){
+      return mc.conn;
+    });
+  }
 }
