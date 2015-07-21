@@ -45,10 +45,10 @@ class FlightQueryService{
     return vos;
   }
 
-  List<TransactionVO> handlePurchase(HttpResponse response) {
+  TransactionVO handlePurchase(HttpResponse response) {
     Dartson converter = new Dartson.JSON();
     var string = JSON.encode(response.data);
-    List<TransactionVO> vos = converter.decode(string, new TransactionVO(), true);
+    TransactionVO vos = converter.decode(string, new TransactionVO());
     return vos;
   }
 }

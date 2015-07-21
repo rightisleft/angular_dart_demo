@@ -49,8 +49,8 @@ class OrderForm extends Object implements ScopeAware {
     var dson = new Dartson.JSON();
     String jsonString = dson.encode(dto);
     print(jsonString);
-    queryService.purchaseTicket(jsonString).then((List<TransactionVO >response){
-      sharedVO.transaction = response.first;
+    queryService.purchaseTicket(jsonString).then((TransactionVO response){
+      sharedVO.transaction = response;
       _router.go('success', {});
     });
   }

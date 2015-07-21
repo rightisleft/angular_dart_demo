@@ -10,8 +10,8 @@ main() {
 
 
   it("should create a record VO and write to the db", () {
-    return  model.createByItem(routeVO).then(( List<BaseVO> vo ) {
-      expect(vo.first.id).toEqual(routeVO.id);
+    return  model.createByItem(routeVO).then(( BaseVO vo ) {
+      expect(vo.id).toEqual(routeVO.id);
     });
   });
 

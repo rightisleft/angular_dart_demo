@@ -58,8 +58,8 @@ Future<Response> makeResponse( json ) async {
   return response;
 }
 
-String _dartsonListToJson(List list) {
-  dynamic encodable = converter.serialize(list);
+String _dartsonListToJson(payload) {
+  dynamic encodable = converter.serialize(payload);
   return JSON.encode(encodable);
 }
 

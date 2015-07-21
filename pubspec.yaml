@@ -9,7 +9,7 @@ dependencies:
   angular: "1.1.0"
   web_components: "0.10.1"
   browser: ">=0.10.0+2 <0.11.0"
-  dartson: "0.2.3"
+  dartson: "0.2.4"
   sass: "0.4.2"
   bootjack: "0.6.5"
   json_object: "1.0.19"

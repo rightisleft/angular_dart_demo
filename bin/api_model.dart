@@ -23,15 +23,9 @@ class BaseMongoModel {
     return _dbPool.getConnection().then((ManagedConnection mc) {
       DbCollection collection = mc.conn.collection(item.collection_key);
       Map aMap = voToMongoMap(item);
-      print(item);
       return collection.insert(aMap).then((_) {
         _dbPool.releaseConnection(mc);
-        if(_['ok'] == 1)
-        {
-          return [item];
-        } else {
-          return _;
-        }
+        return (_['ok'] == 1) ? item : _;
       });
     });
   }
