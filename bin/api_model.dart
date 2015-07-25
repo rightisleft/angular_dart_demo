@@ -23,7 +23,7 @@ class BaseMongoModel {
     return _dbPool.getConnection().then((ManagedConnection mc) {
       Db db = mc.conn;
       DbCollection collection = db.collection(item.collection_key);
-      Map aMap = voToMongoMap(item);
+      Map aMap = dtoToMongoMap(item);
       return collection.insert(aMap).then((status) {
         _dbPool.releaseConnection(mc);
         return (status['ok'] == 1) ? item : _;
@@ -36,7 +36,7 @@ class BaseMongoModel {
     return _dbPool.getConnection().then((ManagedConnection mc) {
       Db database = mc.conn;
       DbCollection collection = database.collection(item.collection_key);
-      Map aMap = voToMongoMap(item);
+      Map aMap = dtoToMongoMap(item);
       return collection.remove(aMap).then((status) {
         _dbPool.releaseConnection(mc);
         return status;
@@ -47,10 +47,10 @@ class BaseMongoModel {
   Future<BaseDTO> readItemByItem(BaseDTO matcher) async {
     assert(matcher.id != null);
     Map query = {'_id': matcher.id};
-    BaseDTO bvo;
+    BaseDTO bdto;
     return _getCollection(matcher.collection_key, query).then((items) {
-      bvo = mapToVO(getInstance(matcher.runtimeType), items.first);
-      return bvo;
+      bdto = mapToDto(getInstance(matcher.runtimeType), items.first);
+      return bdto;
     });
   }
 
@@ -59,7 +59,7 @@ class BaseMongoModel {
     BaseDTO freshInstance = getInstance(t);
     return _getCollectionWhere(freshInstance.collection_key, fieldName, values).then((items) {
       items.forEach((item) {
-        list.add(mapToVO(getInstance(t), item));
+        list.add(mapToDto(getInstance(t), item));
       });
       return list;
     });
@@ -70,7 +70,7 @@ class BaseMongoModel {
     BaseDTO freshInstance = getInstance(t);
     return _getCollection(freshInstance.collection_key, query).then((items) {
       items.forEach((item) {
-        list.add(mapToVO(getInstance(t), item));
+        list.add(mapToDto(getInstance(t), item));
       });
       return list;
     });
@@ -82,7 +82,7 @@ class BaseMongoModel {
       Db database = mc.conn;
       DbCollection collection = new DbCollection(database, item.collection_key);
       Map selector = {'_id': item.id};
-      Map newItem = voToMongoMap(item);
+      Map newItem = dtoToMongoMap(item);
       return await collection.update(selector, newItem).then((_) {
         _dbPool.releaseConnection(mc);
         return _;
@@ -123,7 +123,7 @@ class BaseMongoModel {
     return im.reflectee;
   }
 
-  dynamic mapToVO(cleanObject, Map document) {
+  dynamic mapToDto(cleanObject, Map document) {
     var reflection = reflect(cleanObject);
     document['id'] = document['_id'];
     document.remove('_id');
@@ -133,7 +133,7 @@ class BaseMongoModel {
     return cleanObject;
   }
 
-  Map voToMap(Object object) {
+  Map dtoToMap(Object object) {
     var reflection = reflect(object);
     Map target = new Map();
     var type = reflection.type;
@@ -154,8 +154,8 @@ class BaseMongoModel {
     return target;
   }
 
-  Map voToMongoMap(object) {
-    Map item = voToMap(object);
+  Map dtoToMongoMap(object) {
+    Map item = dtoToMap(object);
 
     // mongo uses an underscore prefix which would act as a private field in dart
     // convert only on write to mongo
