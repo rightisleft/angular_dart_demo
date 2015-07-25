@@ -2,7 +2,7 @@ part of jit_schemas;
 
 @Injectable()
 @Entity()
-class BookingVO extends BaseVO
+class BookingDTO extends BaseDTO
 {
   String collection_key = "Bookings";
 

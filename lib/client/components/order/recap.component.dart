@@ -12,14 +12,14 @@ class Recap extends Object implements ScopeAware {
   RouteProvider _routeProvider;
   FlightQueryService queryService;
   Scope _scope;
-  FlightPostParamsVO params;
+  FlightPostParamsDTO params;
 
-  @NgTwoWay('timeVO')
-  TimeVO timeVO;
+  @NgTwoWay('timeDTO')
+  TimeDTO timeDTO;
 
   Recap(Router this._router, RouteProvider this._routeProvider, FlightQueryService this.queryService)
   {
-    params = new FlightPostParamsVO.FromPost(_routeProvider.parameters);
+    params = new FlightPostParamsDTO.FromPost(_routeProvider.parameters);
   }
 
   void set scope(Scope scope) {
@@ -28,7 +28,7 @@ class Recap extends Object implements ScopeAware {
     this._scope = scope;
     Stream mystream = _scope.rootScope.on('flight');
     mystream.listen((event){
-      timeVO = event.data;
+      timeDTO = event.data;
     });
   }
 

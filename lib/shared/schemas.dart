@@ -6,15 +6,15 @@ import 'package:intl/intl.dart';
 
 
 //Injectables
-part 'vos/base_vo.dart';
-part 'vos/booking_vo.dart';
-part 'vos/cities_vo.dart';
-part 'vos/route_vo.dart';
-part 'vos/purchase_dto.dart';
-part 'vos/time_vo.dart';
-part 'vos/transaction_vo.dart';
+part 'dtos/base_dto.dart';
+part 'dtos/booking_dto.dart';
+part 'dtos/cities_dto.dart';
+part 'dtos/route_dto.dart';
+part 'dtos/purchase_dto.dart';
+part 'dtos/time_dto.dart';
+part 'dtos/transaction_dto.dart';
 
 //Libraries
-part 'vos/flight_post_params_vo.dart';
+part 'dtos/flight_post_params_dto.dart';
 
-const List<Type> schema_classes = const [RouteVO, BookingVO, CitiesVO, TimeVO, TransactionVO, PurchaseDTO];
+const List<Type> schema_classes = const [RouteDTO, BookingDTO, CityDTO, TimeDTO, TransactionDTO, PurchaseDTO];

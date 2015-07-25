@@ -11,8 +11,8 @@ class Picker extends Object {
   Router _router;
   RouteProvider _routeProvider;
   NgForm flightForm;
-  FlightPostParamsVO info = new FlightPostParamsVO();
-  List<CitiesVO> cities;
+  FlightPostParamsDTO info = new FlightPostParamsDTO();
+  List<CityDTO> cities;
   FlightQueryService queryService;
 
   Picker(Router this._router, RouteProvider this._routeProvider, FlightQueryService this.queryService) {
@@ -21,8 +21,8 @@ class Picker extends Object {
   }
 
   void populateCitites() {
-    queryService.fetchCities().then( (List<CitiesVO> vos) {
-      cities = vos;
+    queryService.fetchCities().then( (List<CityDTO> dtos) {
+      cities = dtos;
     });
   }
 

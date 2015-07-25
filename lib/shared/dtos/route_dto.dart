@@ -2,7 +2,7 @@ part of jit_schemas;
 
 @Injectable()
 @Entity()
-class RouteVO extends BaseVO {
+class RouteDTO extends BaseDTO {
   String collection_key = "Routes";
 
   String route;

@@ -8,25 +8,25 @@ part of jit_frontend;
 )
 
 class Topnav extends Object {
-  List<NavButtonVO> buttons;
+  List<NavButtonDTO> buttons;
   Router _router;
 
   Topnav(Router router, RouteProvider provider) {
     _router = router;
     buttons = initbuttons();
-    buttons.forEach((NavButtonVO vo) => vo.isActive = vo.route == provider.route.name);
+    buttons.forEach((NavButtonDTO dto) => dto.isActive = dto.route == provider.route.name);
   }
 
-  List<NavButtonVO> initbuttons() {
-    List<NavButtonVO> buttons = new List<NavButtonVO>();
-    buttons.add( new NavButtonVO()..route = "landing"..content="Home");
-    buttons.add( new NavButtonVO()..route = "picker"..content="Flights" );
-    buttons.add( new NavButtonVO()..route = "contact"..content="Contact" );
+  List<NavButtonDTO> initbuttons() {
+    List<NavButtonDTO> buttons = new List<NavButtonDTO>();
+    buttons.add( new NavButtonDTO()..route = "landing"..content="Home");
+    buttons.add( new NavButtonDTO()..route = "picker"..content="Flights" );
+    buttons.add( new NavButtonDTO()..route = "contact"..content="Contact" );
     return buttons;
   }
 }
 
-class NavButtonVO {
+class NavButtonDTO {
   String route;
   String content;
   bool isActive;

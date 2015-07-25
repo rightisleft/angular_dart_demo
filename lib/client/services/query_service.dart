@@ -7,7 +7,7 @@ class FlightQueryService{
 
   FlightQueryService(Http this._http) {}
 
-  Future fetchFlightTimes(FlightPostParamsVO params) async {
+  Future fetchFlightTimes(FlightPostParamsDTO params) async {
     Map post = params.toPostable();
     return _http.post(BASE + 'times', post ).then(handleTimes);
   }
@@ -24,32 +24,32 @@ class FlightQueryService{
     return _http.post(BASE + 'purchase', json).then(handlePurchase);
   }
 
-  List<TimeVO> handleTimes(HttpResponse response) {
+  List<TimeDTO> handleTimes(HttpResponse response) {
     Dartson converter = new Dartson.JSON();
     var string = JSON.encode(response.data);
-    List<TimeVO> vos = converter.decode(string, new TimeVO(), true);
-    return vos;
+    List<TimeDTO> dtos = converter.decode(string, new TimeDTO(), true);
+    return dtos;
   }
 
-  List<RouteVO> handleRoutes(HttpResponse response) {
+  List<RouteDTO> handleRoutes(HttpResponse response) {
     Dartson converter = new Dartson.JSON();
     var string = JSON.encode(response.data);
-    List<RouteVO> vos = converter.decode(string, new RouteVO(), true);
-    return vos;
+    List<RouteDTO> dtos = converter.decode(string, new RouteDTO(), true);
+    return dtos;
   }
 
-  List<CitiesVO> handleCities(HttpResponse response) {
+  List<CityDTO> handleCities(HttpResponse response) {
     Dartson converter = new Dartson.JSON();
     var string = JSON.encode(response.data);
-    List<CitiesVO> vos = converter.decode(string, new CitiesVO(), true);
-    return vos;
+    List<CityDTO> dtos = converter.decode(string, new CityDTO(), true);
+    return dtos;
   }
 
-  TransactionVO handlePurchase(HttpResponse response) {
+  TransactionDTO handlePurchase(HttpResponse response) {
     Dartson converter = new Dartson.JSON();
     var string = JSON.encode(response.data);
-    TransactionVO vos = converter.decode(string, new TransactionVO());
-    return vos;
+    TransactionDTO dtos = converter.decode(string, new TransactionDTO());
+    return dtos;
   }
 }
 

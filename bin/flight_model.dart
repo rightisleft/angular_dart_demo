@@ -9,37 +9,37 @@ class FlightDataModel extends Object with BaseMongoModel {
   createPurchase(Map params) async {
     var dson = new Dartson.JSON();
     PurchaseDTO object = dson.map(params, new PurchaseDTO() );
-    TransactionVO tvo = new TransactionVO();
+    TransactionDTO tvo = new TransactionDTO();
     tvo.paid = 100;
     tvo.user = object.pEmail;
     return createByItem(tvo);
   }
 
   Future <List> getAllCities(Map params) {
-    return readCollectionByType(CitiesVO);
+    return readCollectionByType(CityDTO);
   }
 
   Future <List> getAllTimes(Map params) {
-    return readCollectionByType(TimeVO);
+    return readCollectionByType(TimeDTO);
   }
 
   Future getTimesByCity(Map params) async {
-    FlightPostParamsVO vo = new FlightPostParamsVO.FromPost(params);
+    FlightPostParamsDTO vo = new FlightPostParamsDTO.FromPost(params);
     Map query = {'arrival': vo.cityArrival, 'departure': vo.cityDepart};
-    List<TimeVO> time_vos = await readCollectionByType(TimeVO, query);
+    List<TimeDTO> time_vos = await readCollectionByType(TimeDTO, query);
     query = {'route': time_vos.first.departure + "_" + time_vos.first.arrival};
-    return readCollectionByType(RouteVO, query).then((List rvos) {
-      time_vos.forEach((TimeVO vo) => vo.route = rvos.first);
+    return readCollectionByType(RouteDTO, query).then((List rvos) {
+      time_vos.forEach((TimeDTO vo) => vo.route = rvos.first);
       return time_vos;
     });
   }
 
   Future getTimesByNumber(Map params) async {
     print(params);
-    List<TimeVO> time_vos = await readCollectionByType(TimeVO, {'flight': int.parse(params['flight'])} );
+    List<TimeDTO> time_vos = await readCollectionByType(TimeDTO, {'flight': int.parse(params['flight'])} );
     var query = {'route': time_vos.first.departure + "_" + time_vos.first.arrival};
-    return readCollectionByType(RouteVO, query).then((List rvos) {
-      time_vos.forEach((TimeVO vo) => vo.route = rvos.first);
+    return readCollectionByType(RouteDTO, query).then((List rvos) {
+      time_vos.forEach((TimeDTO vo) => vo.route = rvos.first);
       return time_vos;
     });
   }

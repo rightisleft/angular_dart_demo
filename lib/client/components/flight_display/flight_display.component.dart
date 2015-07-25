@@ -15,26 +15,26 @@ class FlightDisplay extends Object {
   num service_level;
 
   FlightQueryService queryService;
-  FlightPostParamsVO params;
+  FlightPostParamsDTO params;
 
-  List<TimeVO> flight_times;
-  List<RouteVO> routes;
+  List<TimeDTO> flight_times;
+  List<RouteDTO> routes;
 
   FlightDisplay(Router this.router, RouteProvider this.routeProvider, FlightQueryService this.queryService) {
     if(routeProvider.parameters.isEmpty == false)
     {
-      params = new FlightPostParamsVO.FromPost(routeProvider.parameters);
+      params = new FlightPostParamsDTO.FromPost(routeProvider.parameters);
       fetchData(params);
     }
   }
 
-  void fetchData(FlightPostParamsVO params) {
-    queryService.fetchFlightTimes(params).then( (List<TimeVO> vos) {
-      flight_times = vos;
+  void fetchData(FlightPostParamsDTO params) {
+    queryService.fetchFlightTimes(params).then( (List<TimeDTO> dtos) {
+      flight_times = dtos;
     });
   }
 
-  void onsubmit(TimeVO time)
+  void onsubmit(TimeDTO time)
   {
     var post = params.toPostable();
     post['id'] = time.flight;

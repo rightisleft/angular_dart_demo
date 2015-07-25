@@ -2,7 +2,7 @@ part of jit_schemas;
 
 @Injectable()
 @Entity()
-class CitiesVO extends BaseVO  {
+class CityDTO extends BaseDTO  {
   String collection_key = "Cities";
   String city;
   String airportcode;

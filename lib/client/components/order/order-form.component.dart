@@ -11,26 +11,26 @@ class OrderForm extends Object implements ScopeAware {
   Router _router;
   RouteProvider _routeProvider;
   FlightQueryService queryService;
-  TimeVO flightVO;
+  TimeDTO flightDTO;
   Recap recap;
   Scope _scope;
   PurchaseDTO dto= new PurchaseDTO();
   NgForm orderForm;
-  SharedData sharedVO;
+  SharedData sharedDTO;
 
 
-  OrderForm(Router this._router, RouteProvider this._routeProvider, FlightQueryService this.queryService, SharedData this.sharedVO) {
+  OrderForm(Router this._router, RouteProvider this._routeProvider, FlightQueryService this.queryService, SharedData this.sharedDTO) {
    fetch();
   }
 
   void fetch() {
     if(_routeProvider != null && _routeProvider.parameters.isEmpty == false)
     {
-      queryService.fetchFlightByNumber(int.parse(_routeProvider.parameters['id'])).then((List<TimeVO> vos){
-        flightVO = vos.first;
-        dto.flightID = flightVO.flight;
+      queryService.fetchFlightByNumber(int.parse(_routeProvider.parameters['id'])).then((List<TimeDTO> dtos){
+        flightDTO = dtos.first;
+        dto.flightID = flightDTO.flight;
         dto.flightLevel = int.parse(_routeProvider.parameters['level']);
-        _scope.rootScope.emit('flight', flightVO);
+        _scope.rootScope.emit('flight', flightDTO);
       });
     }
   }
@@ -49,8 +49,8 @@ class OrderForm extends Object implements ScopeAware {
     var dson = new Dartson.JSON();
     String jsonString = dson.encode(dto);
     print(jsonString);
-    queryService.purchaseTicket(jsonString).then((TransactionVO response){
-      sharedVO.transaction = response;
+    queryService.purchaseTicket(jsonString).then((TransactionDTO response){
+      sharedDTO.transaction = response;
       _router.go('success', {});
     });
   }

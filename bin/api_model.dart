@@ -17,36 +17,37 @@ class BaseMongoModel {
 
   static final MongoPool _dbPool = new MongoPool(Config.DATABASE_URL + Config.DATABASE_NAME, 10);
 
-  Future<Map> createByItem(BaseVO item) async {
+  Future<Map> createByItem(BaseDTO item) async {
     assert(item.id == null);
     item.id = new ObjectId();
     return _dbPool.getConnection().then((ManagedConnection mc) {
-      DbCollection collection = mc.conn.collection(item.collection_key);
+      Db db = mc.conn;
+      DbCollection collection = db.collection(item.collection_key);
       Map aMap = voToMongoMap(item);
-      return collection.insert(aMap).then((_) {
+      return collection.insert(aMap).then((status) {
         _dbPool.releaseConnection(mc);
-        return (_['ok'] == 1) ? item : _;
+        return (status['ok'] == 1) ? item : _;
       });
     });
   }
 
-  Future<Map> deleteByItem(BaseVO item) async {
+  Future<Map> deleteByItem(BaseDTO item) async {
     assert(item.id != null);
     return _dbPool.getConnection().then((ManagedConnection mc) {
       Db database = mc.conn;
       DbCollection collection = database.collection(item.collection_key);
       Map aMap = voToMongoMap(item);
-      return collection.remove(aMap).then((_) {
+      return collection.remove(aMap).then((status) {
         _dbPool.releaseConnection(mc);
-        return _;
+        return status;
       });
     });
   }
 
-  Future<BaseVO> readItemByItem(BaseVO matcher) async {
+  Future<BaseDTO> readItemByItem(BaseDTO matcher) async {
     assert(matcher.id != null);
     Map query = {'_id': matcher.id};
-    BaseVO bvo;
+    BaseDTO bvo;
     return _getCollection(matcher.collection_key, query).then((items) {
       bvo = mapToVO(getInstance(matcher.runtimeType), items.first);
       return bvo;
@@ -55,7 +56,7 @@ class BaseMongoModel {
 
   Future<List> readCollectionByTypeWhere(t, fieldName, values) async {
     List list = new List();
-    BaseVO freshInstance = getInstance(t);
+    BaseDTO freshInstance = getInstance(t);
     return _getCollectionWhere(freshInstance.collection_key, fieldName, values).then((items) {
       items.forEach((item) {
         list.add(mapToVO(getInstance(t), item));
@@ -66,7 +67,7 @@ class BaseMongoModel {
 
   Future<List> readCollectionByType(t, [Map query = null]) async {
     List list = new List();
-    BaseVO freshInstance = getInstance(t);
+    BaseDTO freshInstance = getInstance(t);
     return _getCollection(freshInstance.collection_key, query).then((items) {
       items.forEach((item) {
         list.add(mapToVO(getInstance(t), item));
@@ -75,7 +76,7 @@ class BaseMongoModel {
     });
   }
 
-  Future<Map> updateItem(BaseVO item) async {
+  Future<Map> updateItem(BaseDTO item) async {
     assert(item.id != null);
     return _dbPool.getConnection().then((ManagedConnection mc) async {
       Db database = mc.conn;
@@ -95,7 +96,8 @@ class BaseMongoModel {
     return _dbPool.getConnection().then((ManagedConnection mc) async {
       Db database = mc.conn;
       DbCollection collection = new DbCollection(database, collectionName);
-      return await collection.find( where.oneFrom(fieldName, values) ).toList().then((map) {
+      SelectorBuilder builder = where.oneFrom(fieldName, values);
+      return await collection.find( builder ).toList().then((map) {
         _dbPool.releaseConnection(mc);
         return map;
       });
@@ -105,9 +107,9 @@ class BaseMongoModel {
   Future<List> _getCollection(String collectionName, [Map query = null]) {
     return _dbPool.getConnection().then((ManagedConnection mc) async {
       DbCollection collection = new DbCollection(mc.conn, collectionName);
-      return await collection.find(query).toList().then((map) {
+      return await collection.find(query).toList().then((List<map> maps){
         _dbPool.releaseConnection(mc);
-        return map;
+        return maps;
       });
     });
   }

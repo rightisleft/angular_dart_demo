@@ -1,6 +1,6 @@
 part of jit_schemas;
 
-abstract class BaseVO
+abstract class BaseDTO
 {
   var id;
   String collection_key;

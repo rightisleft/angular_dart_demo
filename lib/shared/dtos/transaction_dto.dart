@@ -2,7 +2,7 @@ part of jit_schemas;
 
 @Injectable()
 @Entity()
-class TransactionVO extends BaseVO {
+class TransactionDTO extends BaseDTO {
   String collection_key = "Transactions";
   int paid;
   String user;
