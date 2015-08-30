@@ -6,12 +6,12 @@ import 'package:dartson/dartson.dart';
 
 class FlightDataModel extends Object with BaseMongoModel {
 
-  createPurchase(Map params) async {
+  Future<Map> createPurchase(Map params) async {
     var dson = new Dartson.JSON();
-    PurchaseDTO object = dson.map(params, new PurchaseDTO() );
+    PurchaseDTO purchaser = dson.map(params, new PurchaseDTO() );
     TransactionDTO tdto = new TransactionDTO();
-    tdto.paid = 100;
-    tdto.user = object.pEmail;
+    tdto.paid = 100; //we're faking a successful creditcard payment
+    tdto.user = purchaser.pEmail;
     return createByItem(tdto);
   }
 
@@ -24,8 +24,7 @@ class FlightDataModel extends Object with BaseMongoModel {
   }
 
   Future getTimesByCity(Map params) async {
-    FlightPostParamsDTO dto = new FlightPostParamsDTO.FromPost(params);
-    Map query = {'arrival': dto.cityArrival, 'departure': dto.cityDepart};
+    Map query = {'arrival': params['cityArrival'], 'departure': params['cityDepart']};
     List<TimeDTO> time_dtos = await readCollectionByType(TimeDTO, query);
     query = {'route': time_dtos.first.departure + "_" + time_dtos.first.arrival};
     return readCollectionByType(RouteDTO, query).then((List rdtos) {

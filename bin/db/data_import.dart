@@ -26,13 +26,14 @@ class DataImporterJIT {
     .then(_closeDatabase);
   }
 
-  Future<Db> _insertJsonToMongo(JsonObject json) async
+  Future<Db> insertJsonToMongo(JsonObject json) async
   {
     Db database = new Db(_dbURI + _dbName);
     await database.open();
-    json.keys.forEach((String collectionName) {
+    await Future.forEach(json.keys, (String collectionName) async {
       DbCollection collection = new DbCollection(database, collectionName); //grabs the collection instance
-      collection.insertAll(json[collectionName]); //takes a list of maps and writes to a collection
+      await collection.insertAll(json[collectionName]);
+      //takes a list of maps and writes to a collection
     });
     return database;
   }

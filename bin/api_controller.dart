@@ -18,34 +18,34 @@ FlightDataModel model = new FlightDataModel();
 
 var converter = new Dartson.JSON();
 
-Future <Response> handleCitites(Request request) async {
+Future <Response> handleCitites(Request request) {
   return _genericJsonHandler(model.getAllCities, request);
 }
 
-Future <Response> handleTimesCity(Request request) async {
+Future <Response> handleTimesCity(Request request) {
   return _genericJsonHandler(model.getTimesByCity, request);
 }
 
-handleFlightNumber(Request request) async {
+Future <Response> handleFlightNumber(Request request) {
   return _genericJsonHandler(model.getTimesByNumber, request);
 }
 
-Future <Response> handleTimes(Request request) async {
+Future <Response> handleTimes(Request request) {
   return _genericJsonHandler(model.getAllTimes, request);
 }
 
-Future <Response> handleTickets(Request request) async {
+Future <Response> handlePurchase(Request request) {
   return _genericJsonHandler(model.createPurchase, request);
 }
 
-Future <Response> _200Handler(Function getter, Request request) async {
+Future <Response> _200Handler(Function getter, Request request) {
   return getPostParams(request)
   .then( ( params ) => getPathParams( request , params ) )
   .then( ( json ) => getter( json ) )
   .then( (json ) => new Response.ok('') );
 }
 
-Future <Response> _genericJsonHandler(Function getter, Request request) async {
+Future <Response> _genericJsonHandler(Function getter, Request request) {
   return getPostParams(request)
   .then( ( params ) => getPathParams( request , params ) )
   .then( ( json ) => getter( json ) )
@@ -68,7 +68,6 @@ Map getPathParams(Request request, Map json) {
   params.forEach( (key, val) {
     json[key] = val;
   });
-
   return json;
 }
 

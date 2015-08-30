@@ -34,4 +34,4 @@ const List<Type> client_classes = const [ FlightDisplay,
   SearchBox,
   FlightQueryService,
   OrderForm,
-  Tooltip];
+  Tooltip ];

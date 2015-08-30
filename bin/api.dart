@@ -14,7 +14,7 @@ main() {
   tickets.add('/flight/{flight}', ['GET'], controller.handleFlightNumber);
   tickets.add('/cities', ['GET'], controller.handleCitites);
   tickets.add('/times', ['POST'], controller.handleTimesCity);
-  tickets.add('/purchase', ['POST'], controller.handleTickets);
+  tickets.add('/purchase', ['POST'], controller.handlePurchase);
 
   var handler = const shelf.Pipeline()
   .addMiddleware( shelf.logRequests() )
