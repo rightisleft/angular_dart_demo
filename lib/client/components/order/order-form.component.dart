@@ -44,7 +44,7 @@ class OrderForm extends Object implements ScopeAware {
   onSubmit()
   {
     print(orderForm);
-    print(dto);
+    print(dto.pEmail);
     print('--complete--');
     var dson = new Dartson.JSON();
     String jsonString = dson.encode(dto);

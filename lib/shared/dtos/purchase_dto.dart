@@ -8,8 +8,9 @@ class PurchaseDTO extends Object
 {
   num flightID;
   num flightLevel;
-  num ccn;
-  num ccv;
+
+  String ccn;
+  String ccv;
   String ccType;
   String ccExpiration;
 
@@ -24,6 +25,6 @@ class PurchaseDTO extends Object
   String bAddress;
   String bCity;
   String bState;
-  num bZip;
+  String bZip;
   String bCountry;
 }

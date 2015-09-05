@@ -2,7 +2,7 @@ part of jit_frontend;
 
 @Injectable()
 class FlightQueryService{
-  final String BASE = 'http://localhost:1234/tickets/';
+  final String BASE = 'http://localhost:5678/tickets/';
   Http _http;
 
   FlightQueryService(Http this._http) {}

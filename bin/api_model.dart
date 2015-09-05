@@ -8,7 +8,7 @@ import 'mongo_pool.dart';
 import "dart:mirrors";
 
 class Config {
-  static const String DATABASE_NAME = 'Airport';
+  static const String DATABASE_NAME = 'Tickets';
   static const String DATABASE_URL = 'mongodb://127.0.0.1/';
   static const String DATABASE_SEED = 'db/data/seed.json';
 }
